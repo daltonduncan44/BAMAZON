@@ -92,3 +92,5 @@ INSERT INTO Products (ItemID, ProductName, DepartmentName, Price, StockQuantity)
 'electronics',
 199.99,
 25);
+
+SELECT * FROM  Products; 
