@@ -1,10 +1,10 @@
 var inquirer = require('inquirer');
 var mysql = require('mysql');
-
+////==========g vars to take in inputs and manipulate the database
 var amountOwed;
 var currentDepartment;
 var updateSales;
-
+//========data base connection section 
 var connection = mysql.createConnection({
 	host: 'localhost',
 	port: 3306,
@@ -61,7 +61,7 @@ function placeOrder(){
 				return 'Please enter a numerical value'
 		}
 	}]).then(function(answer){
-	connection.query('SELECT * FROM products WHERE ItemID = ?', [answer.selectId], function(err, res){
+	connection.query('SELECT * FROM Products WHERE ItemID = ?', [answer.selectId], function(err, res){
 		if(answer.selectQuantity > res[0].StockQuantity){
 			console.log('Insufficient Quantity');
 			console.log('This order has been cancelled');
@@ -75,8 +75,8 @@ function placeOrder(){
 			console.log('You owe $' + amountOwed);
 			console.log('');
 			//update products table
-			connection.query('UPDATE products SET ? Where ?', [{
-				StockQuantity: res[0].StockQuantity - answer.selectQuantity
+			connection.query('UPDATE Products SET ? Where ?', [{
+				StockQuantity: res[0].StockQuantity --- answer.selectQuantity
 			},{
 				id: answer.selectId
 			}], function(err, res){});
@@ -103,7 +103,8 @@ function newOrder(){
 		}
 		else{
 			console.log('Thank you for shopping at Bamazon!');
-			//connection.end();
+			//leave the database in log 
+			connection.end();
 		}
 	})
 };
